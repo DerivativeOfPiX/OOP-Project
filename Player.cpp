@@ -1,6 +1,6 @@
 #include "Player.hpp"
 #include <iostream>
-Player::Player(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov) : Living_Things(rend, ast), mover(mov)
+Player::Player(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov) : Living_Things(rend, ast), mover(mov)  // intializes player
 {
     src = {1733, 322, 132, 263};
     right_most = false;
@@ -9,12 +9,12 @@ Player::Player(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov) : Living_Thin
     bw_animate = false;
 }
 
-void Player::draw()
+void Player::draw()  // draws player in the screen
 {
     Living_Things::draw(src, mover);
 }
 
-void Player::move_right()
+void Player::move_right()  // moves the player to the right with animation
 {
     // if (!bw_animate)
     // {
@@ -119,7 +119,7 @@ void Player::move_right()
     left_most = false;
 }
 
-void Player::move_left()
+void Player::move_left()  // moves the player to the left
 {
     // if (!bw_animate)
     // {
@@ -227,42 +227,42 @@ void Player::move_left()
     right_most = false;
 }
 
-int Player::get_x()
+int Player::get_x()  // returns x coordinate of the player
 {
 
     return mover.x;
 }
 
-int Player::get_y()
+int Player::get_y()  // returns y coordinate of the player
 {
     // displacement += 5;
     return mover.y;
 }
-int Player::get_w()
+int Player::get_w() // returns width of the player
 {
     return mover.w;
 }
 
-int Player::get_h()
+int Player::get_h()  // returns height of the player
 {
     return mover.h;
 }
 
-int Player::get_displacement()
+int Player::get_displacement() // tells how much further player has gone from its intial position
 {
     return displacement;
 }
 
-void Player::move_down()
+void Player::move_down() // makes the player fall down 
 {
     mover.y += 2;
 }
-void Player::jump()
+void Player::jump() // makes the player jump  up
 {
     mover.y -= 2;
 }
 
-bool Player::is_alive()
+bool Player::is_alive() // tells whether the player is alive or not
 {
     if (mover.y <= 600)
     {
