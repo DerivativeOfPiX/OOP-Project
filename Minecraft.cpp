@@ -13,7 +13,7 @@ Minecraft::Minecraft(SDL_Renderer *renderer, SDL_Texture *asst) : gRenderer(rend
     home_screen = true;
     storage_screen = false;
     exit_clicked = false;
-    ndirtgs = 5;
+    ndirtgs = 5;  // initalizing each block count to 5
     ndirts = 5;
     nsand = 5;
     nice = 5;
@@ -85,7 +85,7 @@ void Minecraft::create_init()  // initalizes the main game screen i.e. it create
 
     int x = 0;
     int y = 560;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)  // generates the three lower layers of blocks
     {
         for (int j = 0; j < 25; j++)
         {
@@ -98,7 +98,7 @@ void Minecraft::create_init()  // initalizes the main game screen i.e. it create
         y -= 40;
     }
     y = 440;
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)                // generates the toppest layer of blocks 
     {
         SDL_Rect mov = {x, y, 40, 40};
         DirtG d1(gRenderer, assets, mov, x, y);
@@ -109,13 +109,13 @@ void Minecraft::create_init()  // initalizes the main game screen i.e. it create
     // Player a(gRenderer, assets, mov);
     // p = a;
 }
-void Minecraft::drawObjects()  // this function is used to draw objects on the screen 
+void Minecraft::drawObjects()             // this function is used to draw objects on the screen 
 {
-    if (!jumping)
+    if (!jumping) 
     {
         check_fall();
     }
-    if (home_screen)
+    if (home_screen)  // drawing homescreem
     {
         SDL_Rect src_1 = {15, 1349, 3802, 636};
         SDL_Rect mover_1 = {240, 150, 500, 100};
@@ -124,7 +124,7 @@ void Minecraft::drawObjects()  // this function is used to draw objects on the s
         mover_1 = {250, 300, 500, 100};
         SDL_RenderCopy(gRenderer, assets, &src_1, &mover_1);
     }
-    else if (storage_screen)
+    else if (storage_screen)   // drawing storage screen
     {
         SDL_Rect src_1 = {2, 2751, 1281, 723};
         SDL_Rect mover_1 = {0, 0, 1000, 600};
@@ -218,16 +218,16 @@ void Minecraft::drawObjects()  // this function is used to draw objects on the s
     else
     {
 
-        if (p->right_most)
+        if (p->right_most)  // checks if the player has approached nearer to the right screen
         {
-            shift_screen(1, p->mover.x);
+            shift_screen(1, p->mover.x);  // shifting the screen to the right
         }
-        else if (p->left_most)
+        else if (p->left_most)   // checks if the player has approached nearer to the left screen
         {
-            shift_screen(0, p->mover.x);
+            shift_screen(0, p->mover.x); // shifting the screen to the left
         }
 
-        for (Dirt &a : dirts)
+        for (Dirt &a : dirts)  // drawing all the blocks on the screen
         {
             a.draw();
         }
@@ -275,7 +275,7 @@ void Minecraft::drawObjects()  // this function is used to draw objects on the s
         {
             b.draw();
         }
-        p->draw();
+        p->draw();  // drawing the plaayer on the screen
         SDL_Rect src_1 = {1867, 2751, 401, 51};
         SDL_Rect mover_1 = {0, 0, 240, 35};
         SDL_RenderCopy(gRenderer, assets, &src_1, &mover_1);
@@ -284,10 +284,10 @@ void Minecraft::drawObjects()  // this function is used to draw objects on the s
 
 void Minecraft::move_right()  // this function is called when the right key is pressed and the player has to move right
 {
-    if (moveable(1))
+    if (moveable(1))  // if there is no block in the path 
     {
-        p->move_right();
-        if (p->right_most)
+        p->move_right();  // moves the player to the right
+        if (p->right_most) // checks if the player has approached to the right corner and updates indices accordingly
         {
             screen_scrolled += 5;
             if (reset_dim == 40)
@@ -446,10 +446,10 @@ void Minecraft::move_right()  // this function is called when the right key is p
 
 void Minecraft::move_left()  // called when left key is pressed to move the player right
 {
-    if (moveable(0))
+    if (moveable(0)) // if there is no block in the path 
     {
-        p->move_left();
-        if (p->left_most)
+        p->move_left(); // moves the player to the left
+        if (p->left_most) // checks if the player has approached to the left corner and updates indices accordingly
         {
             screen_scrolled -= 5;
             if (reset_dim == -40)
@@ -611,7 +611,7 @@ void Minecraft::move_left()  // called when left key is pressed to move the play
 
 void Minecraft::shift_screen(int side, int units)  // shifts the screen when the player reaches the corner of either side
 {
-    if (side == 1)
+    if (side == 1)  // for moving the screen to the right
     {
         units = units - 750;
         for (Dirt &a : dirts)
@@ -665,7 +665,7 @@ void Minecraft::shift_screen(int side, int units)  // shifts the screen when the
 
         p->mover.x -= units;
     }
-    else if (side == 0)
+    else if (side == 0)  // for moving the screen to the left
     {
         units = 210 - units;
         for (Dirt &a : dirts)
@@ -721,7 +721,7 @@ void Minecraft::shift_screen(int side, int units)  // shifts the screen when the
     }
 }
 
-Player *Minecraft::get_player()
+Player *Minecraft::get_player()  // returns the pointer to the player object
 {
     return p;
 }
@@ -736,32 +736,32 @@ bool Minecraft::exit_click()  // called when exit is clicked by the player on th
 }
 void Minecraft::mouse_click(int x, int y)  // clled whenever there is a mouse click
 {
-    if (home_screen && (x >= 250 && x <= 750) && (y >= 300 && y <= 350))
+    if (home_screen && (x >= 250 && x <= 750) && (y >= 300 && y <= 350))  // condition for mouse click on play button in home screen
     {
         home_screen = false;
         storage_screen = false;
     }
-    else if (home_screen && (x >= 250 && x <= 750) && (y > 350 && y <= 400))
+    else if (home_screen && (x >= 250 && x <= 750) && (y > 350 && y <= 400)) // condition for mouse click on exit button in home screen
     {
         home_screen = false;
         storage_screen = false;
         exit_clicked = true;
     }
-    else if (!home_screen && !storage_screen && (x >= 0 && x <= 120) && (y >= 0 and y <= 35))
+    else if (!home_screen && !storage_screen && (x >= 0 && x <= 120) && (y >= 0 and y <= 35))  // condition for mouse click on home button in game screen
     {
         home_screen = true;
     }
-    else if (!home_screen && !storage_screen && (x > 120 && x <= 240) && (y >= 0 and y <= 35))
+    else if (!home_screen && !storage_screen && (x > 120 && x <= 240) && (y >= 0 and y <= 35)) // condition for mouse click on storage button in game screen
     {
         storage_screen = true;
     }
-    else if (storage_screen)
+    else if (storage_screen) // condition for mouse click in storage screen
     {
-        if (95 <= x && x <= 155 && 110 <= y && y <= 170)
+        if (95 <= x && x <= 155 && 110 <= y && y <= 170)  // conditions to check which block has beeen clicked. that block is then made the active one
         {
             current_block = 1;
         }
-        else if (345 <= x && x <= 405 && 110 <= y && y <= 170)
+        else if (345 <= x && x <= 405 && 110 <= y && y <= 170) 
         {
             current_block = 2;
         }
@@ -807,10 +807,10 @@ void Minecraft::mouse_click(int x, int y)  // clled whenever there is a mouse cl
         }
     }
 
-    else
+    else  // condition for mouse clicked on the game screen anywhere else 
     {
         bool block_present = false;
-        if (p->get_x() - p->get_w() <= x && x <= p->get_x() + p->get_w() + p->get_w() && p->get_y() - 40 <= y && y <= p->get_y() + 120)
+        if (p->get_x() - p->get_w() <= x && x <= p->get_x() + p->get_w() + p->get_w() && p->get_y() - 40 <= y && y <= p->get_y() + 120)  // checking if the block is present where the click is made. if yes the block is broken
         {
 
             for (DirtG &b : dirtgs)
@@ -922,7 +922,7 @@ void Minecraft::mouse_click(int x, int y)  // clled whenever there is a mouse cl
                 }
             }
         }
-        if (!block_present)
+        if (!block_present)  // for click made on empty space . block is placed
         {
 
             if (p->get_x() - p->get_w() <= x && x <= p->get_x() + p->get_w() + p->get_w() && p->get_y() - 40 <= y && y <= p->get_y() + 120)
@@ -1204,7 +1204,7 @@ void Minecraft::check_fall()  // used to implement gravity i.e. to check whether
 
 bool Minecraft::moveable(int a)  // checks if the player can move to the lefft or right 
 {
-    if (a == 1)
+    if (a == 1)  // for right
     {
         for (Dirt &b : dirts)
         {
@@ -1292,7 +1292,7 @@ bool Minecraft::moveable(int a)  // checks if the player can move to the lefft o
         }
         return true;
     }
-    else if (a == 0)
+    else if (a == 0) // for left
     {
         for (Dirt &b : dirts)
         {
