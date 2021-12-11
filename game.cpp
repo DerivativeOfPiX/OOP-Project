@@ -60,7 +60,7 @@ bool Game::loadMedia()
     // Loading success flag
     bool success = true;
 
-    assets = loadTexture("spritesheet.png");
+    assets = loadTexture("spritesheet_3.png");
     gTexture = loadTexture("Background.jpg");
     if (assets == NULL || gTexture == NULL)
     {
@@ -119,11 +119,19 @@ void Game::run()
 {
     bool quit = false;
     SDL_Event e;
-    Minecraft Minecraft(gRenderer, assets);
-    Minecraft.create_init();
+    Minecraft Minecraft1(gRenderer, assets);
+    Minecraft1.create_init();
 
     while (!quit)
     {
+        if (Minecraft1.game_over())
+        {
+            // std::cout << "done";
+            // Minecraft Minecraft1(gRenderer, assets);
+            Minecraft1.reset(gRenderer, assets);
+            Minecraft1.create_init();
+            Minecraft1.goto_home();
+        }
         // Handle events on queue
         while (SDL_PollEvent(&e) != 0)
         {
@@ -149,37 +157,61 @@ void Game::run()
                 //     cout << "loop\n";
                 // }
 
-                Minecraft.mouse_click(xMouse, yMouse);
+                Minecraft1.mouse_click(xMouse, yMouse);
 
-                cout << "x: " << xMouse + Minecraft.get_player()->displacement << "y: " << yMouse + Minecraft.get_player()->displacement << endl;
+                cout << "x: " << xMouse + Minecraft1.get_player()->displacement << "y: " << yMouse + Minecraft1.get_player()->displacement << endl;
                 // if (e.type == SDL_MOUSEBUTTONUP)
                 // {
                 //     cout << "AA";
                 // }
             }
-
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_f)
-                int count = 0;
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+            {
+                // std::cout << "space !";
+                int x1 = 0;
+                while (x1 < 30)
+                {
+                    SDL_RenderClear(gRenderer);
+                    SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+                    Minecraft1.drawObjects();
+                    SDL_RenderPresent(gRenderer);
+                    Minecraft1.jump();
+                    SDL_Delay(10);
+                    x1++;
+                }
+                Minecraft1.jump_done();
+            }
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+                if (Minecraft1.at_storage())
+                {
+                    Minecraft1.goto_game();
+                }
 
             if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT)
             {
 
-                Minecraft.move_right();
+                Minecraft1.move_right();
             }
             if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT)
             {
 
-                Minecraft.move_left();
+                Minecraft1.move_left();
             }
+        }
+        if (Minecraft1.exit_click())
+        {
+            Minecraft1.delete_stuff();
+            exit(0);
         }
 
         SDL_RenderClear(gRenderer);                      // removes everything from renderer
         SDL_RenderCopy(gRenderer, gTexture, NULL, NULL); // Draws background to renderer
         //***********************draw the objects here********************
-        Minecraft.drawObjects();
+        Minecraft1.drawObjects();
         //****************************************************************
         SDL_RenderPresent(gRenderer); // displays the updated renderer
 
-        SDL_Delay(1); // causes sdl engine to delay for specified miliseconds
+        SDL_Delay(50); // causes sdl engine to delay for specified miliseconds
     }
+    Minecraft1.delete_stuff();
 }

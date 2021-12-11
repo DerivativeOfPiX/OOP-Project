@@ -2,7 +2,7 @@
 
 Dirt::Dirt(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov, int x, int y) : Block(rend, ast), mover(mov)
 {
-    src = {83, 1, 80, 80};
+    src = {2560, 2, 80, 80};
     init_x = x;
     init_y = y;
 }

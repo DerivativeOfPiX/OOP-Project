@@ -1,37 +1,37 @@
-#include "DirtG.hpp"
+#include "Stone.hpp"
 
-DirtG::DirtG(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov, int x, int y) : Block(rend, ast), mover(mov)
+Stone::Stone(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov, int x, int y) : Block(rend, ast), mover(mov)
 {
-    src = {2560, 84, 80, 80};
+    src = {2642, 166, 80, 80};
     init_x = x;
     init_y = y;
 }
 
-void DirtG::draw()
+void Stone::draw()
 {
     Block::draw(src, mover);
 }
 
-int DirtG::get_x()
+int Stone::get_x()
 {
     return init_x;
 }
-int DirtG::get_y()
+int Stone::get_y()
 {
     // displacement += 5;
     return init_y;
 }
-int DirtG::get_w()
+int Stone::get_w()
 {
     return mover.w;
 }
 
-int DirtG::get_h()
+int Stone::get_h()
 {
     return mover.h;
 }
 
-bool DirtG::operator==(const DirtG &a1)
+bool Stone::operator==(const Stone &a1)
 {
     if (a1.mover.x == mover.x && a1.mover.y == mover.y)
     {
