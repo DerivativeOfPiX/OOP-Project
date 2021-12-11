@@ -9,4 +9,12 @@ In order to play the game, run the given executable file and the home screen wil
 As the player gets closer to the left or the right side of the screen, the screen starts shifiting and random blocks are being generated as the player keeps movving. This screen strecthes infinitely from the left to right and the blocks keeps on generating as we move. The player can also perform certain actions which are as follows:
 - Player Jumps by pressing the space bar
 - Player brokes and picks up the block by pressing the left mouse button with cursor on the block. Note that the player should be adjacent to the block to remove it.
-- Player places a block when the cursor is on empty space and 
+- Player places a block when the cursor is on empty space and the left mouse button is pressed. Note that the player can place the block only in the empty spaces that are adjacent to him and only if he has that type of block in his storage.
+- Player dies if he falls down and goes below the bottom of the screen. When the player dies, we retrun to the main screen and everything else is resetted.
+- There are 12 types of blocks and initially player contains 5 of each type.
+
+There are two options on the top-left of the screen. The **Home** option takes us back to the Home Screen and the **Storage** option takes us to the storage screen. In the storage screen, we can see 12 blocks. In order to select which bolck to place, we have to click on that block. then if we go back to the game screen, we can place that type of block. In order to exit the storage screen, press the escape key.
+
+
+
+Minor Issue - The game works fine on the initial screen but as we move to the left or to the right, the placing and breaking of blocks is affected due to some coordinate mapping issues.
