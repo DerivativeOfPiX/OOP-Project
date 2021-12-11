@@ -201,9 +201,9 @@ void Game::run()
                 quit = true;
             }
 
-            if (e.type == SDL_MOUSEBUTTONDOWN)
+            if (e.type == SDL_MOUSEBUTTONDOWN)  // when mouse is clicked
             {
-                // this is a good location to add pigeon in linked list.
+                
                 int xMouse, yMouse;
                 SDL_GetMouseState(&xMouse, &yMouse);
                 // while (true)
@@ -218,13 +218,13 @@ void Game::run()
 
                 Minecraft1.mouse_click(xMouse, yMouse);
 
-                cout << "x: " << xMouse + Minecraft1.get_player()->displacement << "y: " << yMouse + Minecraft1.get_player()->displacement << endl;
+//                 cout << "x: " << xMouse + Minecraft1.get_player()->displacement << "y: " << yMouse + Minecraft1.get_player()->displacement << endl;
                 // if (e.type == SDL_MOUSEBUTTONUP)
                 // {
                 //     cout << "AA";
                 // }
             }
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE)  // when space is pressed
             {
                 // std::cout << "space !";
                 int x1 = 0;
@@ -240,26 +240,26 @@ void Game::run()
                 }
                 Minecraft1.jump_done();
             }
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)  // when escape is pressed
                 if (Minecraft1.at_storage())
                 {
                     Minecraft1.goto_game();
                 }
 
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT)
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RIGHT)  // when right key is pressed
             {
 
                 Minecraft1.move_right();
             }
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT)
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_LEFT)  // when left key is pressed
             {
 
                 Minecraft1.move_left();
             }
         }
-        if (Minecraft1.exit_click())
+        if (Minecraft1.exit_click()) // exiting the game is exit is pressed
         {
-            Minecraft1.delete_stuff();
+            Minecraft1.delete_stuff();  // deleting the dynamically allocated objects before exiting
             exit(0);
         }
 
@@ -272,5 +272,5 @@ void Game::run()
 
         SDL_Delay(50); // causes sdl engine to delay for specified miliseconds
     }
-    Minecraft1.delete_stuff();
+    Minecraft1.delete_stuff(); // deleting the dynamically allocated objects before exiting
 }
