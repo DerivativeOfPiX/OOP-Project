@@ -7,31 +7,31 @@ Coal::Coal(SDL_Renderer *rend, SDL_Texture *ast, SDL_Rect mov, int x, int y) : B
     init_y = y;
 }
 
-void Coal::draw()
+void Coal::draw() // draws the block
 {
     Block::draw(src, mover);
 }
 
-int Coal::get_x()
+int Coal::get_x()  // returns x coordinate of the block
 {
     return init_x;
 }
-int Coal::get_y()
+int Coal::get_y()  // returns y coordinate of the block
 {
     // displacement += 5;
     return init_y;
 }
-int Coal::get_w()
+int Coal::get_w() // returns width
 {
     return mover.w;
 }
 
-int Coal::get_h()
+int Coal::get_h() // returns height
 {
     return mover.h;
 }
 
-bool Coal::operator==(const Coal &a1)
+bool Coal::operator==(const Coal &a1) // used for comparing whther the two blocks are (mistakenly) at the same place or not
 {
     if (a1.mover.x == mover.x && a1.mover.y == mover.y)
     {
