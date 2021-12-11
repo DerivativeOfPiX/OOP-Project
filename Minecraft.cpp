@@ -1,9 +1,9 @@
 #include "Minecraft.hpp"
 
-Minecraft::Minecraft(SDL_Renderer *renderer, SDL_Texture *asst) : gRenderer(renderer), assets(asst)
+Minecraft::Minecraft(SDL_Renderer *renderer, SDL_Texture *asst) : gRenderer(renderer), assets(asst)  // initializes/creates every thing
 {
-    SDL_Rect mov = {480, 360, 40, 80};
-    p = new Player(renderer, asst, mov);
+    SDL_Rect mov = {480, 360, 40, 80}; 
+    p = new Player(renderer, asst, mov); // dynamically creating a player
     current_block = 2;
     jumping = false;
     make_full = 0;
@@ -26,18 +26,18 @@ Minecraft::Minecraft(SDL_Renderer *renderer, SDL_Texture *asst) : gRenderer(rend
     nglass = 5;
     ngrass = 5;
 }
-void Minecraft::goto_game()
+void Minecraft::goto_game()  // for going to the game screen
 {
     storage_screen = false;
     home_screen = false;
 }
 
-bool Minecraft::at_storage()
+bool Minecraft::at_storage() // checks whether we are at storage screen or not
 {
     return storage_screen;
 }
 
-SDL_Rect Minecraft::no_of_blk(int n)
+SDL_Rect Minecraft::no_of_blk(int n)   // returns the rect that gives us the sprite coordinates of the type of block based on its number
 {
     SDL_Rect a;
     switch (n)
@@ -80,7 +80,7 @@ SDL_Rect Minecraft::no_of_blk(int n)
     }
     return a;
 }
-void Minecraft::create_init()
+void Minecraft::create_init()  // initalizes the main game screen i.e. it creates the 4 horizonntal layers of blocks
 {
 
     int x = 0;
@@ -109,7 +109,7 @@ void Minecraft::create_init()
     // Player a(gRenderer, assets, mov);
     // p = a;
 }
-void Minecraft::drawObjects()
+void Minecraft::drawObjects()  // this function is used to draw objects on the screen 
 {
     if (!jumping)
     {
@@ -282,7 +282,7 @@ void Minecraft::drawObjects()
     }
 }
 
-void Minecraft::move_right()
+void Minecraft::move_right()  // this function is called when the right key is pressed and the player has to move right
 {
     if (moveable(1))
     {
@@ -444,7 +444,7 @@ void Minecraft::move_right()
     }
 }
 
-void Minecraft::move_left()
+void Minecraft::move_left()  // called when left key is pressed to move the player right
 {
     if (moveable(0))
     {
@@ -609,7 +609,7 @@ void Minecraft::move_left()
     }
 }
 
-void Minecraft::shift_screen(int side, int units)
+void Minecraft::shift_screen(int side, int units)  // shifts the screen when the player reaches the corner of either side
 {
     if (side == 1)
     {
@@ -726,7 +726,7 @@ Player *Minecraft::get_player()
     return p;
 }
 
-bool Minecraft::exit_click()
+bool Minecraft::exit_click()  // called when exit is clicked by the player on the home screen
 {
     if (exit_clicked)
     {
@@ -734,7 +734,7 @@ bool Minecraft::exit_click()
     }
     return false;
 }
-void Minecraft::mouse_click(int x, int y)
+void Minecraft::mouse_click(int x, int y)  // clled whenever there is a mouse click
 {
     if (home_screen && (x >= 250 && x <= 750) && (y >= 300 && y <= 350))
     {
@@ -1010,7 +1010,7 @@ void Minecraft::mouse_click(int x, int y)
         }
     }
 }
-int Minecraft::random_gen_1()
+int Minecraft::random_gen_1()  // generates the top most layer randomly as we move to either left or right
 {
     int a = rand() % 240 + 1;
     if (0 <= a && a <= 150)
@@ -1049,7 +1049,7 @@ int Minecraft::random_gen_1()
         return 12;
 }
 
-int Minecraft::random_gen_2()
+int Minecraft::random_gen_2() // generates the bottom three layers randomly as we move to either left or right
 {
     int a = rand() % 330 + 1;
     if (0 <= a && a <= 40)
@@ -1086,7 +1086,7 @@ int Minecraft::random_gen_2()
         return 12;
 }
 
-void Minecraft::check_fall()
+void Minecraft::check_fall()  // used to implement gravity i.e. to check whether the player is in the air or not
 {
     bool block_present = false;
     for (DirtG &b : dirtgs)
@@ -1202,7 +1202,7 @@ void Minecraft::check_fall()
     }
 }
 
-bool Minecraft::moveable(int a)
+bool Minecraft::moveable(int a)  // checks if the player can move to the lefft or right 
 {
     if (a == 1)
     {
@@ -1382,23 +1382,23 @@ bool Minecraft::moveable(int a)
     }
 }
 
-void Minecraft::jump()
+void Minecraft::jump()  // makes the player jump
 {
     p->jump();
     jumping = true;
 }
 
-void Minecraft::jump_done()
+void Minecraft::jump_done() // indicates that the player has reached its jump height
 {
     jumping = false;
 }
 
-bool Minecraft::game_over()
+bool Minecraft::game_over()  //tells whther player died or not
 {
     return (!(p->is_alive()));
 }
 
-void Minecraft::reset(SDL_Renderer *renderer, SDL_Texture *asst)
+void Minecraft::reset(SDL_Renderer *renderer, SDL_Texture *asst) // resets everything (again)
 {
     delete p;
     SDL_Rect mov = {480, 360, 40, 80};
@@ -1438,13 +1438,13 @@ void Minecraft::reset(SDL_Renderer *renderer, SDL_Texture *asst)
     glasses.clear();
 }
 
-void Minecraft::goto_home()
+void Minecraft::goto_home()  // goes to the home screen
 {
     home_screen = true;
     storage_screen = false;
 }
 
-void Minecraft::delete_stuff()
+void Minecraft::delete_stuff()  // delete the dynamically allocated objects
 {
     delete p;
 }
