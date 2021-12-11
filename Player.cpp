@@ -18,7 +18,7 @@ void Player::move_right()  // moves the player to the right with animation
 {
     // if (!bw_animate)
     // {
-    if (src.x == 1733 && src.y == 322)
+    if (src.x == 1733 && src.y == 322) // changing appeareances to make the player animate
     {
         src.x = 1533;
         src.y = 22;
@@ -125,7 +125,7 @@ void Player::move_left()  // moves the player to the left
     // {
     // std::cout << "x" << get_x();
     // std::cout << "y" << get_y();
-    if (src.x == 1157 && src.y == 322)
+    if (src.x == 1157 && src.y == 322)  // changing the appeareances to make the player animate
     {
         src.x = 1357;
         src.y = 22;
