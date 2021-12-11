@@ -12,6 +12,14 @@ bool Game::init()
         printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
         success = false;
     }
+
+    //Initialize SDL_mixer
+    else if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        success = false;
+    }
+
     else
     {
         // Set texture filtering to linear
@@ -60,6 +68,43 @@ bool Game::loadMedia()
     // Loading success flag
     bool success = true;
 
+     /**Load music
+    gMusic = Mix_LoadMUS( "21_sound_effects_and_music/beat.wav" );
+    if( gMusic == NULL )
+    {
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+    
+    //Load sound effects
+    gScratch = Mix_LoadWAV( "21_sound_effects_and_music/scratch.wav" );
+    if( gScratch == NULL )
+    {
+        printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+    
+    gHigh = Mix_LoadWAV( "21_sound_effects_and_music/high.wav" );
+    if( gHigh == NULL )
+    {
+        printf( "Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+
+    gMedium = Mix_LoadWAV( "21_sound_effects_and_music/medium.wav" );
+    if( gMedium == NULL )
+    {
+        printf( "Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+
+    gLow = Mix_LoadWAV( "21_sound_effects_and_music/low.wav" );
+    if( gLow == NULL )
+    {
+        printf( "Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }**/
+
     assets = loadTexture("./sprites/spritesheet_3.png");
     gTexture = loadTexture("./sprites/Background.jpg");
     if (assets == NULL || gTexture == NULL)
@@ -77,6 +122,20 @@ void Game::close()
     SDL_DestroyTexture(assets);
     assets = NULL;
     SDL_DestroyTexture(gTexture);
+
+    //Free the sound effects
+    Mix_FreeChunk( gScratch );
+    Mix_FreeChunk( gHigh );
+    Mix_FreeChunk( gMedium );
+    Mix_FreeChunk( gLow );
+    gScratch = NULL;
+    gHigh = NULL;
+    gMedium = NULL;
+    gLow = NULL;
+    
+    //Free the music
+    Mix_FreeMusic( gMusic );
+    gMusic = NULL;
 
     // Destroy window
     SDL_DestroyRenderer(gRenderer);

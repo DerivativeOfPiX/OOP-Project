@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -22,6 +23,15 @@ class Game
     SDL_Texture *gTexture = NULL;
     // global reference to png image sheets
     SDL_Texture *assets = NULL;
+
+    //The music that will be played
+    Mix_Music *gMusic = NULL;
+
+    //The sound effects that will be used
+    Mix_Chunk *gScratch = NULL;
+    Mix_Chunk *gHigh = NULL;
+    Mix_Chunk *gMedium = NULL;
+    Mix_Chunk *gLow = NULL;
 
 public:
     bool init();
